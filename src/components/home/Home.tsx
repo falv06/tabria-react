@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import type { Tab } from "@reiwuzen/tabria";
+import type { Tab } from "@falv/tabria";
 import "./Home.css";
 
 type HomeProps = {
@@ -133,7 +133,9 @@ const Home = ({
       const maxTop = trackHeight - tHeight;
       const delta = e.clientY - dragStartY.current;
       const scrollRatio = delta / maxTop;
-      el.scrollTop = dragStartScrollTop.current + scrollRatio * (scrollHeight - clientHeight);
+      el.scrollTop =
+        dragStartScrollTop.current +
+        scrollRatio * (scrollHeight - clientHeight);
     };
 
     const onMouseUp = () => {
@@ -171,7 +173,10 @@ const Home = ({
   return (
     <div
       className="home"
-      onMouseEnter={() => { showScrollbar(); scheduleHide(); }}
+      onMouseEnter={() => {
+        showScrollbar();
+        scheduleHide();
+      }}
       onMouseLeave={scheduleHide}
     >
       <div className="home__scroll" ref={scrollRef}>
@@ -190,14 +195,19 @@ const Home = ({
         {/* ── Dashboard Grid ── */}
         <div className="home__grid">
           {/* Stats Card */}
-          <section className="home__card home__card--stats" id="workspace-stats">
+          <section
+            className="home__card home__card--stats"
+            id="workspace-stats"
+          >
             <div className="home__card-header">
               <span className="home__card-icon">📊</span>
               <h2 className="home__card-title">Workspace</h2>
             </div>
             <div className="home__stats">
               <div className="home__stat">
-                <span className="home__stat-value home__stat-value--primary">{openTabCount}</span>
+                <span className="home__stat-value home__stat-value--primary">
+                  {openTabCount}
+                </span>
                 <span className="home__stat-label">Open Tabs</span>
                 <div className="home__stat-bar">
                   <div
@@ -207,7 +217,9 @@ const Home = ({
                 </div>
               </div>
               <div className="home__stat">
-                <span className="home__stat-value home__stat-value--accent">{closedTabCount}</span>
+                <span className="home__stat-value home__stat-value--accent">
+                  {closedTabCount}
+                </span>
                 <span className="home__stat-label">Recently Closed</span>
                 <div className="home__stat-bar">
                   <div
@@ -220,25 +232,44 @@ const Home = ({
           </section>
 
           {/* Quick Actions Card */}
-          <section className="home__card home__card--actions" id="quick-actions">
+          <section
+            className="home__card home__card--actions"
+            id="quick-actions"
+          >
             <div className="home__card-header">
               <span className="home__card-icon">⚡</span>
               <h2 className="home__card-title">Quick Actions</h2>
             </div>
             <div className="home__action-grid">
-              <button className="home__action-btn home__action-btn--primary" onClick={onNewTab} id="new-tab-action">
+              <button
+                className="home__action-btn home__action-btn--primary"
+                onClick={onNewTab}
+                id="new-tab-action"
+              >
                 <span className="home__action-emoji">✨</span>
                 <span className="home__action-text">New Tab</span>
               </button>
-              <button className="home__action-btn" onClick={onNewTab} id="incognito-action">
+              <button
+                className="home__action-btn"
+                onClick={onNewTab}
+                id="incognito-action"
+              >
                 <span className="home__action-emoji">🔒</span>
                 <span className="home__action-text">Private</span>
               </button>
-              <button className="home__action-btn" onClick={onNewTab} id="bookmark-action">
+              <button
+                className="home__action-btn"
+                onClick={onNewTab}
+                id="bookmark-action"
+              >
                 <span className="home__action-emoji">📌</span>
                 <span className="home__action-text">Bookmark</span>
               </button>
-              <button className="home__action-btn" onClick={onNewTab} id="duplicate-action">
+              <button
+                className="home__action-btn"
+                onClick={onNewTab}
+                id="duplicate-action"
+              >
                 <span className="home__action-emoji">📋</span>
                 <span className="home__action-text">Duplicate</span>
               </button>
@@ -268,7 +299,10 @@ const Home = ({
           </section>
 
           {/* Keyboard Shortcuts */}
-          <section className="home__card home__card--shortcuts" id="keyboard-shortcuts">
+          <section
+            className="home__card home__card--shortcuts"
+            id="keyboard-shortcuts"
+          >
             <div className="home__card-header">
               <span className="home__card-icon">⌨️</span>
               <h2 className="home__card-title">Shortcuts</h2>
@@ -278,7 +312,9 @@ const Home = ({
                 <div key={shortcut.label} className="home__shortcut">
                   <div className="home__shortcut-keys">
                     {shortcut.keys.map((key) => (
-                      <kbd key={key} className="home__kbd">{key}</kbd>
+                      <kbd key={key} className="home__kbd">
+                        {key}
+                      </kbd>
                     ))}
                   </div>
                   <span className="home__shortcut-label">{shortcut.label}</span>
@@ -289,10 +325,15 @@ const Home = ({
 
           {/* Recently Closed */}
           {recentlyClosedTabs.length > 0 && (
-            <section className="home__card home__card--history" id="recently-closed">
+            <section
+              className="home__card home__card--history"
+              id="recently-closed"
+            >
               <div className="home__card-header">
                 <span className="home__card-icon">🕐</span>
-                <h2 className="home__card-title">Continue where you left off</h2>
+                <h2 className="home__card-title">
+                  Continue where you left off
+                </h2>
               </div>
               <div className="home__history-list">
                 {recentlyClosedTabs.slice(0, 5).map((tab) => (
@@ -307,7 +348,9 @@ const Home = ({
                     <div className="home__history-info">
                       <span className="home__history-name">{tab.title}</span>
                       <span className="home__history-url">
-                        {tab.currentPageId ? tab.pages.storage[tab.currentPageId]?.url : "about:blank"}
+                        {tab.currentPageId
+                          ? tab.pages.storage[tab.currentPageId]?.url
+                          : "about:blank"}
                       </span>
                     </div>
                     <span className="home__history-arrow">→</span>
@@ -331,11 +374,16 @@ const Home = ({
 
       {/* ── Custom Scrollbar ── */}
       {thumbHeight > 0 && (
-        <div className={`home__scrollbar-track ${scrollbarVisible ? 'home__scrollbar-track--visible' : ''}`}>
+        <div
+          className={`home__scrollbar-track ${scrollbarVisible ? "home__scrollbar-track--visible" : ""}`}
+        >
           <div
             ref={thumbRef}
             className="home__scrollbar-thumb"
-            style={{ height: thumbHeight, transform: `translateY(${thumbTop}px)` }}
+            style={{
+              height: thumbHeight,
+              transform: `translateY(${thumbTop}px)`,
+            }}
             onMouseDown={handleThumbMouseDown}
           />
         </div>

@@ -1,4 +1,4 @@
-import type { Tab, TabID } from "@reiwuzen/tabria";
+import type { Tab, TabID } from "@falv/tabria";
 import "./tabbar.css";
 
 type TabbarProps = {
@@ -13,7 +13,9 @@ type TabbarProps = {
 
 const getTabUrl = (tab: Tab) => {
   const currentPageId = tab.currentPageId;
-  return currentPageId ? tab.pages.storage[currentPageId]?.url ?? "about:blank" : "about:blank";
+  return currentPageId
+    ? (tab.pages.storage[currentPageId]?.url ?? "about:blank")
+    : "about:blank";
 };
 
 const getTabIcon = (url: string, title: string) => {
@@ -56,7 +58,11 @@ const Tabbar = ({
 
       <div className="tabbar__scroller-shell">
         <div className="tabbar__scroller">
-          <div className="tabbar__track" role="tablist" aria-label="Browser tabs">
+          <div
+            className="tabbar__track"
+            role="tablist"
+            aria-label="Browser tabs"
+          >
             {tabs.map((tab) => {
               const isActive = tab.id === activeTabId;
               const url = getTabUrl(tab);
@@ -75,7 +81,9 @@ const Tabbar = ({
                   <span className="tabbar__icon" aria-hidden="true">
                     {icon}
                   </span>
-                  <span className="tabbar__title">{tab.title || "New Tab"}</span>
+                  <span className="tabbar__title">
+                    {tab.title || "New Tab"}
+                  </span>
                   <span
                     className="tabbar__close"
                     role="button"
@@ -94,7 +102,6 @@ const Tabbar = ({
                     tabIndex={0}
                   >
                     ✕
-                  
                   </span>
                 </button>
               );

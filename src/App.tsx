@@ -1,5 +1,5 @@
 import { type ReactNode, useCallback, useEffect, useState } from "react";
-import type { Page, TabID } from "@reiwuzen/tabria";
+import type { Page, TabID } from "@falv/tabria";
 import AccessibilityBar from "./components/accessibilityBar/accessibilityBar";
 import Settings from "./components/settings/settings";
 import TabOptions from "./components/tabOptions/tabOptions";
@@ -13,7 +13,9 @@ import "./App.css";
 type BrowserPage = Page;
 
 function App() {
-  const [tabbarTheme, setTabbarTheme] = useState<"system" | "graphite" | "ocean">("system");
+  const [tabbarTheme, setTabbarTheme] = useState<
+    "system" | "graphite" | "ocean"
+  >("system");
   const { workspace, setWorkspace, updateLimits } = useWorkspace();
   const {
     tabs,
@@ -80,7 +82,9 @@ function App() {
       return;
     }
 
-    const currentIndex = activeTab.pageStack.findIndex((page) => page.id === activeTab.currentPageId);
+    const currentIndex = activeTab.pageStack.findIndex(
+      (page) => page.id === activeTab.currentPageId,
+    );
     if (currentIndex <= 0) {
       return;
     }
@@ -93,7 +97,9 @@ function App() {
       return;
     }
 
-    const currentIndex = activeTab.pageStack.findIndex((page) => page.id === activeTab.currentPageId);
+    const currentIndex = activeTab.pageStack.findIndex(
+      (page) => page.id === activeTab.currentPageId,
+    );
     if (currentIndex < 0 || currentIndex >= activeTab.pageStack.length - 1) {
       return;
     }
@@ -109,45 +115,48 @@ function App() {
 
   const currentUrl = activeTab?.activePage?.url ?? "about:blank";
   const currentPageIndex = activeTab?.currentPageId
-    ? activeTab.pageStack.findIndex((page) => page.id === activeTab.currentPageId)
+    ? activeTab.pageStack.findIndex(
+        (page) => page.id === activeTab.currentPageId,
+      )
     : -1;
   const canGoBack = currentPageIndex > 0;
-  const canGoForward = currentPageIndex >= 0 && currentPageIndex < (activeTab?.pageStack.length ?? 0) - 1;
+  const canGoForward =
+    currentPageIndex >= 0 &&
+    currentPageIndex < (activeTab?.pageStack.length ?? 0) - 1;
   const recentlyClosedTabs = workspace.tabs.closedOrder
     .map((tabId) => workspace.tabs.storage[tabId])
-    .filter((tab): tab is typeof tabs[number] => Boolean(tab));
+    .filter((tab): tab is (typeof tabs)[number] => Boolean(tab));
   const activePageState = activeTab?.activePage?.state;
   const openTabCount = workspace.tabs.openOrder.length;
   const closedTabCount = workspace.tabs.closedOrder.length;
 
-  const activePageContent = activeTab?.activePage?.url === "tabria.settings"
-    ? (
-        <Settings
-          limits={workspace.limits}
-          openTabCount={openTabCount}
-          closedTabCount={closedTabCount}
-          tabbarTheme={tabbarTheme}
-          onTabbarThemeChange={setTabbarTheme}
-          onLimitsChange={({ openTabs, closedTabs }) => {
-            updateLimits({
-              openTabs,
-              closedTabs,
-              totalTabs: openTabs + closedTabs,
-            });
-          }}
-        />
-      )
-    : activeTab?.activePage?.url === "about:blank" || !activeTabId
-    ? (
-        <Home
-          openTabCount={openTabCount}
-          closedTabCount={closedTabCount}
-          recentlyClosedTabs={recentlyClosedTabs}
-          onReopenTab={(tabId) => reopenClosedTab(tabId as TabID)}
-          onNewTab={handleNewTab}
-        />
-      )
-    : (activePageState as ReactNode);
+  const activePageContent =
+    activeTab?.activePage?.url === "tabria.settings" ? (
+      <Settings
+        limits={workspace.limits}
+        openTabCount={openTabCount}
+        closedTabCount={closedTabCount}
+        tabbarTheme={tabbarTheme}
+        onTabbarThemeChange={setTabbarTheme}
+        onLimitsChange={({ openTabs, closedTabs }) => {
+          updateLimits({
+            openTabs,
+            closedTabs,
+            totalTabs: openTabs + closedTabs,
+          });
+        }}
+      />
+    ) : activeTab?.activePage?.url === "about:blank" || !activeTabId ? (
+      <Home
+        openTabCount={openTabCount}
+        closedTabCount={closedTabCount}
+        recentlyClosedTabs={recentlyClosedTabs}
+        onReopenTab={(tabId) => reopenClosedTab(tabId as TabID)}
+        onNewTab={handleNewTab}
+      />
+    ) : (
+      (activePageState as ReactNode)
+    );
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -179,8 +188,11 @@ function App() {
         }
 
         event.preventDefault();
-        const currentIndex = activeTabId ? tabs.findIndex((tab) => tab.id === activeTabId) : -1;
-        const nextIndex = currentIndex >= 0 ? (currentIndex + 1) % tabs.length : 0;
+        const currentIndex = activeTabId
+          ? tabs.findIndex((tab) => tab.id === activeTabId)
+          : -1;
+        const nextIndex =
+          currentIndex >= 0 ? (currentIndex + 1) % tabs.length : 0;
         activateTab(tabs[nextIndex].id);
         return;
       }

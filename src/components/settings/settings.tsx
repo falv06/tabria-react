@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import type { Workspace } from "@reiwuzen/tabria";
+import type { Workspace } from "@falv/tabria";
 import "./settings.css";
 
 type SettingsProps = {
@@ -11,7 +11,12 @@ type SettingsProps = {
   onLimitsChange: (limits: { openTabs: number; closedTabs: number }) => void;
 };
 
-type SettingsSectionId = "you-and-tabria" | "tabs" | "appearance" | "privacy" | "system";
+type SettingsSectionId =
+  | "you-and-tabria"
+  | "tabs"
+  | "appearance"
+  | "privacy"
+  | "system";
 
 type SettingsSection = {
   id: SettingsSectionId;
@@ -65,22 +70,33 @@ const Settings = ({
 }: SettingsProps) => {
   const [activeSection, setActiveSection] = useState<SettingsSectionId>("tabs");
   const [openTabsLimit, setOpenTabsLimit] = useState(String(limits.openTabs));
-  const [closedTabsLimit, setClosedTabsLimit] = useState(String(limits.closedTabs));
+  const [closedTabsLimit, setClosedTabsLimit] = useState(
+    String(limits.closedTabs),
+  );
   const [prevLimits, setPrevLimits] = useState(limits);
 
-  if (limits.openTabs !== prevLimits.openTabs || limits.closedTabs !== prevLimits.closedTabs) {
+  if (
+    limits.openTabs !== prevLimits.openTabs ||
+    limits.closedTabs !== prevLimits.closedTabs
+  ) {
     setPrevLimits(limits);
     setOpenTabsLimit(String(limits.openTabs));
     setClosedTabsLimit(String(limits.closedTabs));
   }
 
   const activeSectionMeta = useMemo(() => {
-    return SECTIONS.find((section) => section.id === activeSection) ?? SECTIONS[1];
+    return (
+      SECTIONS.find((section) => section.id === activeSection) ?? SECTIONS[1]
+    );
   }, [activeSection]);
 
   const handleSave = () => {
-    const nextOpenTabsLimit = clampLimit(Number(openTabsLimit) || RECOMMENDED_LIMIT);
-    const nextClosedTabsLimit = clampLimit(Number(closedTabsLimit) || RECOMMENDED_LIMIT);
+    const nextOpenTabsLimit = clampLimit(
+      Number(openTabsLimit) || RECOMMENDED_LIMIT,
+    );
+    const nextClosedTabsLimit = clampLimit(
+      Number(closedTabsLimit) || RECOMMENDED_LIMIT,
+    );
 
     setOpenTabsLimit(String(nextOpenTabsLimit));
     setClosedTabsLimit(String(nextClosedTabsLimit));
@@ -108,7 +124,8 @@ const Settings = ({
             <div>
               <h2 className="settings__panel-title">Appearance</h2>
               <p className="settings__panel-copy">
-                Adjust visual treatment for the tab strip only. The rest of the interface remains unchanged.
+                Adjust visual treatment for the tab strip only. The rest of the
+                interface remains unchanged.
               </p>
             </div>
           </div>
@@ -128,7 +145,9 @@ const Settings = ({
                 onClick={() => onTabbarThemeChange("system")}
               >
                 <span className="settings__theme-name">System</span>
-                <span className="settings__theme-copy">Matches the current app palette.</span>
+                <span className="settings__theme-copy">
+                  Matches the current app palette.
+                </span>
               </button>
               <button
                 className={`settings__theme-card${tabbarTheme === "graphite" ? " settings__theme-card--active" : ""}`}
@@ -136,7 +155,9 @@ const Settings = ({
                 onClick={() => onTabbarThemeChange("graphite")}
               >
                 <span className="settings__theme-name">Graphite</span>
-                <span className="settings__theme-copy">Neutral chrome with a sharper desktop feel.</span>
+                <span className="settings__theme-copy">
+                  Neutral chrome with a sharper desktop feel.
+                </span>
               </button>
               <button
                 className={`settings__theme-card${tabbarTheme === "ocean" ? " settings__theme-card--active" : ""}`}
@@ -144,7 +165,9 @@ const Settings = ({
                 onClick={() => onTabbarThemeChange("ocean")}
               >
                 <span className="settings__theme-name">Ocean</span>
-                <span className="settings__theme-copy">Cool blue accenting focused on navigation.</span>
+                <span className="settings__theme-copy">
+                  Cool blue accenting focused on navigation.
+                </span>
               </button>
             </div>
           </div>
@@ -157,8 +180,8 @@ const Settings = ({
         <div className="settings__placeholder">
           <h2 className="settings__panel-title">{activeSectionMeta.label}</h2>
           <p className="settings__panel-copy">
-            This section is scaffolded into the settings shell, but only the Tabs section has
-            interactive controls right now.
+            This section is scaffolded into the settings shell, but only the
+            Tabs section has interactive controls right now.
           </p>
         </div>
       );
@@ -170,11 +193,9 @@ const Settings = ({
           <div>
             <h2 className="settings__panel-title">Tabs</h2>
             <p className="settings__panel-copy">
-              Control how many open and recently closed tabs the workspace keeps. Recommended is
-              {" "}
-              <strong>{RECOMMENDED_LIMIT}</strong>
-              {" "}
-              for both.
+              Control how many open and recently closed tabs the workspace
+              keeps. Recommended is <strong>{RECOMMENDED_LIMIT}</strong> for
+              both.
             </p>
           </div>
         </div>
@@ -198,7 +219,8 @@ const Settings = ({
           <div className="settings__group-header">
             <h3 className="settings__group-title">Tab retention</h3>
             <p className="settings__group-copy">
-              Each value must stay between 10 and 50. The package recommendation is 20.
+              Each value must stay between 10 and 50. The package recommendation
+              is 20.
             </p>
           </div>
 
@@ -223,7 +245,9 @@ const Settings = ({
 
             <label className="settings__row">
               <div className="settings__row-copy">
-                <span className="settings__row-title">Recently closed limit</span>
+                <span className="settings__row-title">
+                  Recently closed limit
+                </span>
                 <span className="settings__row-hint">
                   How many closed tabs remain available for restore.
                 </span>
@@ -242,10 +266,18 @@ const Settings = ({
         </div>
 
         <div className="settings__actions">
-          <button className="settings__button settings__button--secondary" type="button" onClick={handleRecommended}>
+          <button
+            className="settings__button settings__button--secondary"
+            type="button"
+            onClick={handleRecommended}
+          >
             Use Recommended
           </button>
-          <button className="settings__button" type="button" onClick={handleSave}>
+          <button
+            className="settings__button"
+            type="button"
+            onClick={handleSave}
+          >
             Save Limits
           </button>
         </div>
@@ -269,16 +301,16 @@ const Settings = ({
                   onClick={() => setActiveSection(section.id)}
                 >
                   <span className="settings__nav-label">{section.label}</span>
-                  <span className="settings__nav-description">{section.description}</span>
+                  <span className="settings__nav-description">
+                    {section.description}
+                  </span>
                 </button>
               );
             })}
           </nav>
         </aside>
 
-        <div className="settings__content">
-          {renderPanel()}
-        </div>
+        <div className="settings__content">{renderPanel()}</div>
       </div>
     </section>
   );

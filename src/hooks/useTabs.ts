@@ -1,4 +1,12 @@
-import { actions, core, selectors, type Page, type Tab, type TabID, type Workspace } from "@reiwuzen/tabria";
+import {
+  actions,
+  core,
+  selectors,
+  type Page,
+  type Tab,
+  type TabID,
+  type Workspace,
+} from "@falv/tabria";
 import { useCallback, useMemo } from "react";
 import type { Dispatch, SetStateAction } from "react";
 
@@ -14,7 +22,9 @@ type ReopenClosedTab = {
 
 type OpenTabOptions = Parameters<typeof actions.openTab>[1];
 
-export type ActiveTab = (Tab & { activePage: Page | null; pageStack: Page[] }) | null;
+export type ActiveTab =
+  | (Tab & { activePage: Page | null; pageStack: Page[] })
+  | null;
 
 export const useTabs = ({ workspace, setWorkspace }: UseTabsOptions) => {
   const tabCounts = useMemo(() => {
@@ -29,9 +39,18 @@ export const useTabs = ({ workspace, setWorkspace }: UseTabsOptions) => {
 
   const tabCapacity = useMemo(() => {
     const { limits } = workspace;
-    const openTabsRemaining = limits.openTabs === null ? null : Math.max(limits.openTabs - tabCounts.openTabs, 0);
-    const closedTabsRemaining = limits.closedTabs === null ? null : Math.max(limits.closedTabs - tabCounts.closedTabs, 0);
-    const totalTabsRemaining = limits.totalTabs === null ? null : Math.max(limits.totalTabs - tabCounts.totalTabs, 0);
+    const openTabsRemaining =
+      limits.openTabs === null
+        ? null
+        : Math.max(limits.openTabs - tabCounts.openTabs, 0);
+    const closedTabsRemaining =
+      limits.closedTabs === null
+        ? null
+        : Math.max(limits.closedTabs - tabCounts.closedTabs, 0);
+    const totalTabsRemaining =
+      limits.totalTabs === null
+        ? null
+        : Math.max(limits.totalTabs - tabCounts.totalTabs, 0);
 
     return {
       openTabsRemaining,
@@ -58,43 +77,67 @@ export const useTabs = ({ workspace, setWorkspace }: UseTabsOptions) => {
     };
   }, [workspace]);
 
-  const addTab = useCallback((tab: Tab) => {
-    setWorkspace((prev) => actions.addTab(prev, tab));
-  }, [setWorkspace]);
+  const addTab = useCallback(
+    (tab: Tab) => {
+      setWorkspace((prev) => actions.addTab(prev, tab));
+    },
+    [setWorkspace],
+  );
 
-  const openTab = useCallback((opts?: OpenTabOptions) => {
-    setWorkspace((prev) => actions.openTab(prev, opts));
-  }, [setWorkspace]);
+  const openTab = useCallback(
+    (opts?: OpenTabOptions) => {
+      setWorkspace((prev) => actions.openTab(prev, opts));
+    },
+    [setWorkspace],
+  );
 
-  const activateTab = useCallback((tabId: TabID) => {
-    setWorkspace((prev) => actions.activateTab(prev, tabId));
-  }, [setWorkspace]);
+  const activateTab = useCallback(
+    (tabId: TabID) => {
+      setWorkspace((prev) => actions.activateTab(prev, tabId));
+    },
+    [setWorkspace],
+  );
 
-  const activatePage = useCallback((tabId: TabID, pageId: Page["id"]) => {
-    setWorkspace((prev) => actions.activatePage(prev, tabId, pageId));
-  }, [setWorkspace]);
+  const activatePage = useCallback(
+    (tabId: TabID, pageId: Page["id"]) => {
+      setWorkspace((prev) => actions.activatePage(prev, tabId, pageId));
+    },
+    [setWorkspace],
+  );
 
-  const closeTab = useCallback((tabId: TabID) => {
-    setWorkspace((prev) => actions.closeTab(prev, tabId));
-  }, [setWorkspace]);
+  const closeTab = useCallback(
+    (tabId: TabID) => {
+      setWorkspace((prev) => actions.closeTab(prev, tabId));
+    },
+    [setWorkspace],
+  );
 
-  const moveTab = useCallback((tabId: TabID, toIndex: number) => {
-    setWorkspace((prev) => actions.moveTab(prev, tabId, toIndex));
-  }, [setWorkspace]);
+  const moveTab = useCallback(
+    (tabId: TabID, toIndex: number) => {
+      setWorkspace((prev) => actions.moveTab(prev, tabId, toIndex));
+    },
+    [setWorkspace],
+  );
 
-  const pushPage = useCallback((tabId: TabID, page: Page) => {
-    setWorkspace((prev) => actions.pushScreen(prev, tabId, page));
-  }, [setWorkspace]);
+  const pushPage = useCallback(
+    (tabId: TabID, page: Page) => {
+      setWorkspace((prev) => actions.pushScreen(prev, tabId, page));
+    },
+    [setWorkspace],
+  );
 
-  const reopenClosedTab: ReopenClosedTab = useCallback((tabId?: TabID) => {
-    setWorkspace((prev) => {
-      if (tabId === undefined) {
-        return actions.reopenClosedTab(prev);
-      }
+  const reopenClosedTab: ReopenClosedTab = useCallback(
+    (tabId?: TabID) => {
+      setWorkspace((prev) => {
+        if (tabId === undefined) {
+          return actions.reopenClosedTab(prev);
+        }
 
-      return actions.reopenClosedTab(prev, tabId);
-    });
-  }, [setWorkspace]) as ReopenClosedTab;
+        return actions.reopenClosedTab(prev, tabId);
+      });
+    },
+    [setWorkspace],
+  ) as ReopenClosedTab;
 
   const clearClosedTabs = useCallback(() => {
     setWorkspace((prev) => {
@@ -119,7 +162,7 @@ export const useTabs = ({ workspace, setWorkspace }: UseTabsOptions) => {
     });
   }, [setWorkspace]);
 
-  const createTab = useCallback(()=>core.createTab(), []);
+  const createTab = useCallback(() => core.createTab(), []);
 
   return {
     tabs: selectors.getTabs(workspace),

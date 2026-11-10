@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import type { Tab, TabID } from "@reiwuzen/tabria";
+import type { Tab, TabID } from "@falv/tabria";
 import "./tabSearch.css";
 
 type TabSearchProps = {

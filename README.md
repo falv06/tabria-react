@@ -1,8 +1,8 @@
-# @reiwuzen/tabria-react
+# @falv/tabria-react
 
-React UI for [`@reiwuzen/tabria`](https://www.npmjs.com/package/@reiwuzen/tabria), the headless tab and page-history manager.
+React UI for [`@falv/tabria`](https://www.npmjs.com/package/@falv/tabria), the headless tab and page-history manager.
 
-`@reiwuzen/tabria` owns the workspace state model and pure tab actions. This package provides a browser-like React interface over that state: tab strip, navigation controls, tab search, recently closed tabs, options menu, and settings.
+`@falv/tabria` owns the workspace state model and pure tab actions. This package provides a browser-like React interface over that state: tab strip, navigation controls, tab search, recently closed tabs, options menu, and settings.
 
 ## Status
 
@@ -19,9 +19,9 @@ This package is currently a Vite/React implementation layer for Tabria. The UI i
 - App-wide theme presets: System, Graphite, and Ocean.
 - Responsive tab sizing with horizontal scrolling.
 
-## Relationship To `@reiwuzen/tabria`
+## Relationship To `@falv/tabria`
 
-`@reiwuzen/tabria` is headless. It provides:
+`@falv/tabria` is headless. It provides:
 
 - `createWorkspace`
 - `createTab`
@@ -33,7 +33,7 @@ This package is currently a Vite/React implementation layer for Tabria. The UI i
 - `replacePage`
 - selectors such as `getTabs` and `getActiveTab`
 
-`@reiwuzen/tabria-react` wraps those primitives with React hooks and UI components.
+`@falv/tabria-react` wraps those primitives with React hooks and UI components.
 
 The local hooks are:
 
@@ -44,13 +44,13 @@ The local hooks are:
 ## Installation
 
 ```bash
-pnpm add @reiwuzen/tabria @reiwuzen/tabria-react
+pnpm add @falv/tabria @falv/tabria-react
 ```
 
 For npm:
 
 ```bash
-npm install @reiwuzen/tabria @reiwuzen/tabria-react
+npm install @falv/tabria @falv/tabria-react
 ```
 
 ## Development
@@ -92,7 +92,7 @@ The settings screen lets users configure open and recently closed tab limits in 
 `totalTabs` is derived as:
 
 ```ts
-openTabs + closedTabs
+openTabs + closedTabs;
 ```
 
 ## Project Structure
@@ -116,7 +116,7 @@ tabria.ts
 
 ## Notes
 
-- The React UI treats `@reiwuzen/tabria` as the source of truth for state transitions.
+- The React UI treats `@falv/tabria` as the source of truth for state transitions.
 - Components should avoid mutating workspace state directly.
 - Prefer using Tabria `actions` through the hooks.
 - Settings currently update runtime state in memory. Persistence can be added by storing the workspace or preferences externally.
